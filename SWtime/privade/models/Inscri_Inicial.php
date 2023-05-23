@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "/laragon/www/SWtime/privade/config_BD/Connection.php";
 #####################################################################################################################################################################################################################################*/
 //variables del form
@@ -60,34 +59,38 @@ if($cedula == $data['C.C'] && $correo == $data['CorreoInstitucional'] ){
 
         ##################################################
         //funcion de alert update correcto 
-        
-        $_SESSION['alert_message'] = 'ACTUALIZACION EXITOSA'; 
-        $_SESSION['alert_type'] = 'success';
-        $_SESSION['alert_duration'] = 5; 
-        header('Location: /privade/views/Inscripcion.php'); 
-        die;
+        $alertMessage = urlencode('ACTUALIZACION EXITOSA');
+        $alertType = urlencode('success');
+        $alertDuration = urlencode('5');
+
+        $url = '/privade/views/Inscripcion.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+        header('Location: ' . $url);
+        die();
         
         ###################################################
         
 
         
 
-    }else{
-        
-        $_SESSION['alert_message'] = '¡ERROR EN LA CONTRASEÑA!'; 
-        $_SESSION['alert_type'] = 'warning';
-        $_SESSION['alert_duration'] = 5; 
-        header('Location: /privade/views/Inscripcion.php'); 
-        die;
+    } else {
+        // Función de alerta
+        $alertMessage = urlencode('¡ERROR EN LA CONTRASEÑA!');
+        $alertType = urlencode('warning');
+        $alertDuration = urlencode('5');
+
+        $url = '/privade/views/Inscripcion.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+        header('Location: ' . $url);
+        die();
     }
-}else{
+} else {
+    // Función de alerta
+    $alertMessage = urlencode('¡ERROR INFORMACION INVALIDA!');
+    $alertType = urlencode('warning');
+    $alertDuration = urlencode('5');
 
-        $_SESSION['alert_message'] = '¡ERROR INFORMACION INVALIDA!'; 
-        $_SESSION['alert_type'] = 'warning';
-        $_SESSION['alert_duration'] = 5; 
-        header('Location: /privade/views/Inscripcion.php'); 
-        die;
-
+    $url = '/privade/views/Inscripcion.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+    header('Location: ' . $url);
+    die();
 }
 
 //encriptado de las contraseña FUNCION

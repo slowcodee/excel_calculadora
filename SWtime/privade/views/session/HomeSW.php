@@ -1,5 +1,6 @@
 <?php
-session_start();
+session_start(); // Asegúrate de iniciar la sesión en la página de inicio
+
 include "/laragon/www/SWtime/privade/controllers/base.php";
 require_once '/laragon/www/SWtime/privade/controllers/config.php'; 
 ?>
@@ -23,7 +24,7 @@ require_once '/laragon/www/SWtime/privade/controllers/config.php';
   <h4 class="align-items-center m-5"><?php echo $_SESSION['NOMBRE'] ?></h4>
 </div>
       <div class="col-12 col-md-6 mb-5 text-center align-items-center">
-        <form class="form-inline" style="max-width: 100%;">
+        <form class="form-inline" style="max-width: 100%;" action="/privade/models/nombre_instructor.php" method="POST">
           <div class="input-group w-100">
             <input type="text" class="form-control" placeholder="NOMBRE DEL INSTRUCTOR">
             <div class="input-group-append">

@@ -15,15 +15,15 @@ $data = array(); // Crear un array vacío
 //si el resultado esta vacio 
 if (mysqli_num_rows($result) > 0) {
     $data = mysqli_fetch_assoc($result);
-} else { 
+} else {
+    // El usuario no existe en la base de datos
+    $alertMessage = urlencode('!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡');
+    $alertType = urlencode('success');
+    $alertDuration = urlencode('5');
     
-    session_start();
-    $_SESSION['alert_message'] = '!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡'; 
-    $_SESSION['alert_type'] = 'success';
-    $_SESSION['alert_duration'] = 5; 
-    header('Location: /privade/views/Index.php'); 
-    die;
-            
+    $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+    header('Location: ' . $url);
+    die();
 }
 
 #####################################################################################################################################################################################################################################
@@ -42,32 +42,33 @@ if ($data != null) {
 
     if ($plaintext == $contraseña && $email == $data['CorreoInstitucional'] ) {
         // El usuario ha ingresado la contraseña correcta
-        session_start();
+        session_start();        
         $_SESSION['NOMBRE'] = $data['NOMBRE'];
-        $NombreUser = $_SESSION['NOMBRE'];
-        global $NombreUser;
-        header('Location: /privade/views/session/HomeSW.php'); 
+        $NOMBREUSER = $_SESSION['NOMBRE'];
+        $_SESSION['C.C'] = $data['C.C'];
+        $CEDULA = $_SESSION['C.C'];
+        header('Location: /privade/views/session/HomeSW.php');  
         exit;
 
-    } else {
-        // La contraseña ingresada por el usuario es incorrecta
-        session_start();
-        $_SESSION['alert_message'] = '!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡';
-        $_SESSION['alert_type'] = 'success';
-        $_SESSION['alert_duration'] = 5; 
-        header('Location: /privade/views/Index.php'); 
-        die;
-
+    }else {
+        // El usuario no existe en la base de datos
+        $alertMessage = urlencode('!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡');
+        $alertType = urlencode('success');
+        $alertDuration = urlencode('5');
+        
+        $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+        header('Location: ' . $url);
+        die();
     }
-} else {
+}else {
     // El usuario no existe en la base de datos
-    session_start();
-    $_SESSION['alert_message'] = '!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡';
-    $_SESSION['alert_type'] = 'success';
-    $_SESSION['alert_duration'] = 5; 
-    header('Location: /privade/views/Index.php'); 
-    die;
-
+    $alertMessage = urlencode('!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡');
+    $alertType = urlencode('success');
+    $alertDuration = urlencode('5');
+    
+    $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+    header('Location: ' . $url);
+    die();
 }
 
 // Función de desencriptado

@@ -1,29 +1,23 @@
 <?PHP
-session_start();
 include "/laragon/www/SWtime/privade/controllers/base.php";
 //require_once '/laragon/www/SWtime/privade/controllers/config.php';
 
-if (isset($_SESSION['alert_message'])) {
-    $alert_type = $_SESSION['alert_type'];
-    $alert_message = $_SESSION['alert_message'];
-    $alert_duration = isset($_SESSION['alert_duration']) ? $_SESSION['alert_duration'] * 1000 : 5000; // Duración del temporizador en milisegundos, por defecto 5 segundos
+$alertMessage = isset($_GET['alert_message']) ? urldecode($_GET['alert_message']) : '';
+$alertType = isset($_GET['alert_type']) ? urldecode($_GET['alert_type']) : '';
+$alertDuration = isset($_GET['alert_duration']) ? urldecode($_GET['alert_duration']) : '';
+
+if (!empty($alertMessage) && !empty($alertType) && !empty($alertDuration)) {
+    echo '<div class="alert alert-warning ' . $alertType . ' alert-dismissible fade show text-center" role="alert">' . $alertMessage .
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeAlert()"><span aria-hidden="true">&times;</span></button></div>';
     
-    echo '<div class="alert alert-warning ' . $alert_type . ' alert-dismissible fade show text-center" role="alert">' . $alert_message .
-         '<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeAlert()"><span aria-hidden="true">&times;</span></button></div>';
-    
-    echo '<script>setTimeout(function() { document.getElementsByClassName("alert")[0].style.display = "none"; }, ' . $alert_duration . ');</script>';
-    
-    unset($_SESSION['alert_type']);
-    unset($_SESSION['alert_message']);
-    unset($_SESSION['alert_duration']);
+    echo '<script>setTimeout(function() { document.getElementsByClassName("alert")[0].style.display = "none"; }, ' . ($alertDuration * 1000) . ');</script>';
 }
 
 echo '<script>
-          function closeAlert() {
-              document.getElementsByClassName("alert")[0].style.display = "none";
-          }
-      </script>';
-
+        function closeAlert() {
+            document.getElementsByClassName("alert")[0].style.display = "none";
+        }
+    </script>';
 ?>
 
 <!DOCTYPE html>

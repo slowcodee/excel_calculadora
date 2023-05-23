@@ -45,32 +45,27 @@ echo '<script>
     
     </head>
     <body>
-        <div class='container'>
-            
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-danger btn-block btn-lg mb-2" href="/privade/views/session/HomeSW.php" role="button">atras</a>
-                </div> 
-
-            <div>
-                <form action='/privade/models/contraseña_nueva_log.php' method='POST'>
-                    <!-- <div class='form-group'>
-                        <label for='username' class="d-flex justify-content-center">CEDULA</label>
-                        <input type='number' class='cedula form-control d-flex justify-content-center' placeholder='NUEMERO DE LA C.C' id='cedula' name='cedula' required>
-                    </div> -->
-                    <div class='form-group'>
-                        <label for='pwd' class="d-flex justify-content-center">CONTRASEÑA</label>
-                        <input type='password' class='CONTRASEÑA1 form-control d-flex justify-content-center' placeholder='CONTRASEÑA' id='contraseña1' name='contraseña1' required>
-                    </div>
-                    <div class='form-group'>
-                        <label for='pwd' class="d-flex justify-content-center">VALIDACION DE LA CONTRASEÑA</label>
-                        <input type='password' class='CONTRASEÑA2 form-control d-flex justify-content-center' placeholder='CONTRASEÑA' id='contraseña2' name='contraseña2' required>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button type='submit' class='btn btn-primary'>inscribete</button>
-                    </div> 
-                </form>
-            </div>
-
+    <form action="/privade/models/contraseña_nueva_log.php" method="POST">
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <a class="btn btn-danger btn-block btn-lg mb-2" href="/privade/views/session/HomeSW.php" role="button">Atrás</a>
         </div>
-</body>
+        <div class="mt-3">
+          <label for="contraseña1" class="d-flex justify-content-center">CONTRASEÑA</label>
+          <input type="password" class="form-control" id="contraseña1" name="contraseña1" placeholder="CONTRASEÑA" required>
+        </div>
+        <div class="mt-3">
+          <label for="contraseña2" class="d-flex justify-content-center">VALIDACION DE LA CONTRASEÑA</label>
+          <input type="password" class="form-control" id="contraseña2" name="contraseña2" placeholder="CONTRASEÑA" required>
+        </div>
+        <div class="mt-3 text-center">
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Inscribete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
 </html>
