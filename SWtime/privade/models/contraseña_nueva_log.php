@@ -7,22 +7,20 @@ $contraseña2 = $_POST['contraseña2'];
 
 $CEDULA = $_SESSION['C.C'];
 
-$sql = "SELECT * FROM `tb_instructors` WHERE `C.C` = '$CEDULA'";
-$result = mysqli_query($conn, $sql);
-$data = mysqli_fetch_assoc($result);
+$tables = array("tb_instructors", "tb_admin");
 
 if ($contraseña1 == $contraseña2) {
     $contraseña = $contraseña1;
     $key = "EstaEsMiClaveSecreta1234";
     $ciphertext = encrypt($contraseña, $key);
 
-    $sql = "UPDATE `tb_instructors` SET `CONTRASEÑA` = ? WHERE `C.C` = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ss", $ciphertext, $CEDULA);
-    $result = mysqli_stmt_execute($stmt);
-
-
-    mysqli_stmt_close($stmt);
+    foreach ($tables as $table) {
+        $sql = "UPDATE `$table` SET `CONTRASEÑA` = ? WHERE `C.C` = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $ciphertext, $CEDULA);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
 
     $_SESSION['alert_message'] = 'ACTUALIZACION EXITOSA';
     $_SESSION['alert_type'] = 'success';
@@ -46,3 +44,4 @@ function encrypt($texto, $key) {
     return $ciphertext;
 }
 ?>
+

@@ -23,24 +23,28 @@ require_once '/laragon/www/SWtime/privade/controllers/config.php';
     <div class="col-12 col-md-6 mb-5 d-flex align-items-center justify-content-center">
   <h4 class="align-items-center m-5"><?php echo $_SESSION['NOMBRE'] ?></h4>
 </div>
+
       <div class="col-12 col-md-6 mb-5 text-center align-items-center">
-        <form class="form-inline" style="max-width: 100%;" action="/privade/models/nombre_instructor.php" method="POST">
+        <form class="form-inline" style="max-width: 100%;" action="/privade//models/nombre_instructor.php" method="POST">
           <div class="input-group w-100">
-            <input type="text" class="form-control" placeholder="NOMBRE DEL INSTRUCTOR">
+            <input type="text" class="form-control" placeholder="NOMBRE DEL INSTRUCTOR O CEDULA" name="nombre007">
             <div class="input-group-append">
-              <button class="btn btn-success" type="button">Buscar</button>
+              <button class="btn btn-success" type="submit">Buscar</button>
             </div>
           </div>
         </form>
+
         <form class="form-inline mt-3" style="max-width: 100%;">
           <div class="input-group w-100">
             <input type="text" class="form-control" placeholder="ID DEL RALP">
             <div class="input-group-append">
-              <button class="btn btn-success" type="button">Buscar</button>
+              <button class="btn btn-success" type="submit">Buscar</button>
             </div>
           </div>
         </form>
       </div>
+
+
       <div class="col-12 col-md-6 mb-5 text-center align-items-center">
         <a class="btn btn-primary btn-block btn-lg mb-2" href="/privade/views/session/Tabla_Maestra.php" role="button">TABLA MAESTRA</a>
         <a class="btn btn-primary btn-block btn-lg mb-2" href="/privade/views/session/Fichas.php" role="button">FICHAS</a>

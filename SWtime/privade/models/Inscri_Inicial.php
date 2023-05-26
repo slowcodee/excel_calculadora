@@ -1,79 +1,70 @@
 <?php
 include "/laragon/www/SWtime/privade/config_BD/Connection.php";
-#####################################################################################################################################################################################################################################*/
-//variables del form
+
+// Variables del formulario
 $correo = $_POST['correo'];
 $cedula = $_POST['cedula'];
 
 $contraseña1 = $_POST['contraseña1'];
 $contraseña2 = $_POST['contraseña2'];
-#####################################################################################################################################################################################################################################
 
-$sql = "SELECT * FROM `tb_instructors` WHERE `C.C` = '$cedula'";
-$result = mysqli_query($conn, $sql);
-$data = mysqli_fetch_assoc($result);
+$queries = array(
+    "SELECT * FROM `tb_instructors` WHERE `C.C` = '$cedula'",
+    "SELECT * FROM `tb_admin` WHERE `C.C` = '$cedula'"
+);
 
-/* $cedula_tb=$data['C.C'];
-$correo_tb=$data['CorreoIntitucional'];
- */
-//check the data
-/*  if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Agregar cada fila de la tabla de resultados al array $data
-        $data[] = $row;
+$data = array();
+
+// Realizar las consultas y almacenar los resultados en $data
+foreach ($queries as $query) {
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        $data[] = mysqli_fetch_assoc($result);
     }
-    // Imprimir los resultados del array $data
-    print_r($data);
-} else {
-    echo "No se encontraron resultados.";
-}  
-*/
+}
 
-#####################################################################################################################################################################################################################################
+// Verificar la cédula y el correo ingresados
+$validCredentials = false;
+foreach ($data as $item) {
+    if ($cedula == $item['C.C'] && $correo == $item['CorreoInstitucional']) {
+        $validCredentials = true;
+        break;
+    }
+}
 
-if($cedula == $data['C.C'] && $correo == $data['CorreoInstitucional'] ){
-    if($contraseña1 == $contraseña2){
-        
-        #################################################
-        //encriptado de las contraseña FUNCION                    
-
-        $contraseña=$contraseña1;
+if ($validCredentials) {
+    if ($contraseña1 == $contraseña2) {
+        $contraseña = $contraseña1;
         $key = "EstaEsMiClaveSecreta1234";
         $ciphertext = encrypt($contraseña, $key);
-        //CHECK THE NCRIPTION 
-        
-        /* echo "Texto encriptado: " . $ciphertext; */
-        
-        ##################################################
-        
-        // Actualizar la contraseña en la base de datos //
-        
-        $sql = "UPDATE `tb_instructors` SET `CONTRASEÑA` = '$ciphertext' WHERE `C.C` = '$cedula'";
-        $result = mysqli_query($conn, $sql);
-            echo'<br>';
-            if ($result) {
-            echo "Contraseña actualizada exitosamente.";
-                } else {
-            echo "Error al actualizar la contraseña: " . mysqli_error($conn);
-                    }
 
-        ##################################################
-        //funcion de alert update correcto 
-        $alertMessage = urlencode('ACTUALIZACION EXITOSA');
-        $alertType = urlencode('success');
-        $alertDuration = urlencode('5');
+        $sql_update_instructors = "UPDATE `tb_instructors` SET `CONTRASEÑA` = '$ciphertext' WHERE `C.C` = '$cedula'";
+        $result_instructors = mysqli_query($conn, $sql_update_instructors);
 
-        $url = '/privade/views/Inscripcion.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
-        header('Location: ' . $url);
-        die();
-        
-        ###################################################
-        
+        $sql_update_admin = "UPDATE `tb_admin` SET `CONTRASEÑA` = '$ciphertext' WHERE `C.C` = '$cedula'";
+        $result_admin = mysqli_query($conn, $sql_update_admin);
 
-        
+        if ($result_instructors && $result_admin) {
+            // Contraseña actualizada exitosamente
+            $alertMessage = urlencode('ACTUALIZACION EXITOSA');
+            $alertType = urlencode('success');
+            $alertDuration = urlencode('5');
 
+            $url = '/privade/views/Inscripcion.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+            header('Location: ' . $url);
+            die();
+        } else {
+            // Error al actualizar la contraseña
+            $alertMessage = urlencode('Error al actualizar la contraseña: ' . mysqli_error($conn));
+            $alertType = urlencode('danger');
+            $alertDuration = urlencode('5');
+
+            $url = '/privade/views/Inscripcion.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+            header('Location: ' . $url);
+            die();
+        }
     } else {
-        // Función de alerta
+        // Contraseñas no coinciden
         $alertMessage = urlencode('¡ERROR EN LA CONTRASEÑA!');
         $alertType = urlencode('warning');
         $alertDuration = urlencode('5');
@@ -83,8 +74,8 @@ if($cedula == $data['C.C'] && $correo == $data['CorreoInstitucional'] ){
         die();
     }
 } else {
-    // Función de alerta
-    $alertMessage = urlencode('¡ERROR INFORMACION INVALIDA!');
+    // Cédula y/o correo inválidos
+    $alertMessage = urlencode('¡ERROR: INFORMACION INVALIDA!');
     $alertType = urlencode('warning');
     $alertDuration = urlencode('5');
 
@@ -93,7 +84,7 @@ if($cedula == $data['C.C'] && $correo == $data['CorreoInstitucional'] ){
     die();
 }
 
-//encriptado de las contraseña FUNCION
+// Función de encriptación de contraseñas
 function encrypt($texto, $key) {
     $cipher = "blowfish";
     $ivlen = openssl_cipher_iv_length($cipher);
@@ -101,8 +92,5 @@ function encrypt($texto, $key) {
     $ciphertext = openssl_encrypt($texto, $cipher, $key, OPENSSL_RAW_DATA, $iv);
     $ciphertext = base64_encode($iv . $ciphertext);
     return $ciphertext;
-    }
-
-#####################################################################################################################################################################################################################################
-
+}
 ?>

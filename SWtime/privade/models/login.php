@@ -8,68 +8,62 @@ $email = $_POST['email'];
 $contraseña = $_POST['contraseña'];
 
 #####################################################################################################################################################################################################################################
-$sql = "SELECT * FROM `tb_instructors` WHERE `CorreoInstitucional` = '$email'";
-$result = mysqli_query($conn, $sql);
-$data = array(); // Crear un array vacío
-#####################################################################################################################################################################################################################################
-//si el resultado esta vacio 
-if (mysqli_num_rows($result) > 0) {
-    $data = mysqli_fetch_assoc($result);
-} else {
-    // El usuario no existe en la base de datos
-    $alertMessage = urlencode('!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡');
-    $alertType = urlencode('success');
-    $alertDuration = urlencode('5');
-    
-    $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
-    header('Location: ' . $url);
-    die();
-}
+// Variables de consulta
+$queries = array(
+    "SELECT * FROM `tb_instructors` WHERE `CorreoInstitucional` = '$email'",
+    "SELECT * FROM `tb_admin` WHERE `CorreoInstitucional` = '$email'"
+);
 
-#####################################################################################################################################################################################################################################
+// Arrays para almacenar los datos
+$data = array();
 
-if ($data != null) {
-    // Ejemplo de uso
-    $ciphertext = $data['CONTRASEÑA'];
-    $key = "EstaEsMiClaveSecreta1234";
-    $plaintext = decrypt($ciphertext, $key);
-    
-    //cheking the incriptation 
-    /* echo $contraseña . 'password del input';
-    echo '<br>';
-    echo $plaintext . 'password de la base de datos';
-     */
-
-    if ($plaintext == $contraseña && $email == $data['CorreoInstitucional'] ) {
-        // El usuario ha ingresado la contraseña correcta
-        session_start();        
-        $_SESSION['NOMBRE'] = $data['NOMBRE'];
-        $NOMBREUSER = $_SESSION['NOMBRE'];
-        $_SESSION['C.C'] = $data['C.C'];
-        $CEDULA = $_SESSION['C.C'];
-        header('Location: /privade/views/session/HomeSW.php');  
-        exit;
-
-    }else {
-        // El usuario no existe en la base de datos
-        $alertMessage = urlencode('!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡');
-        $alertType = urlencode('success');
-        $alertDuration = urlencode('5');
-        
-        $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
-        header('Location: ' . $url);
-        die();
+// Realizar las consultas y almacenar los resultados en $data
+foreach ($queries as $query) {
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        $data[] = mysqli_fetch_assoc($result);
     }
-}else {
-    // El usuario no existe en la base de datos
-    $alertMessage = urlencode('!ERROR EN LA CONTRASEÑA O CON EL EMAIL¡');
-    $alertType = urlencode('success');
-    $alertDuration = urlencode('5');
-    
-    $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
-    header('Location: ' . $url);
-    die();
 }
+
+// Verificar los datos y ejecutar el código correspondiente
+foreach ($data as $item) {
+    if (!empty($item)) {
+        // El item tiene información
+        // Ejemplo de uso
+        $ciphertext = $item['CONTRASEÑA'];
+        $key = "EstaEsMiClaveSecreta1234";
+        $plaintext = decrypt($ciphertext, $key);
+
+        if ($plaintext == $contraseña && $email == $item['CorreoInstitucional']) {
+            // El usuario ha ingresado la contraseña correcta
+            session_start();
+            $_SESSION['NOMBRE'] = $item['NOMBRE'];
+            $NOMBREUSER = $_SESSION['NOMBRE'];
+            $_SESSION['C.C'] = $item['C.C'];
+            $CEDULA = $_SESSION['C.C'];
+            header('Location: /privade/models/home_log.php');
+            exit;
+        } else {
+            // El usuario no existe en la base de datos o la contraseña es incorrecta
+            $alertMessage = urlencode('¡ERROR EN LA CONTRASEÑA O EN EL EMAIL!');
+            $alertType = urlencode('success');
+            $alertDuration = urlencode('5');
+
+            $url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+            header('Location: ' . $url);
+            die();
+        }
+    }
+}
+
+// Si no se encuentra ningún dato válido, redireccionar
+$alertMessage = urlencode('¡ERROR EN LA CONTRASEÑA O EN EL EMAIL!');
+$alertType = urlencode('success');
+$alertDuration = urlencode('5');
+
+$url = '/privade/views/Index.php?alert_message=' . $alertMessage . '&alert_type=' . $alertType . '&alert_duration=' . $alertDuration;
+header('Location: ' . $url);
+die();
 
 // Función de desencriptado
 function decrypt($ciphertext, $key) {
