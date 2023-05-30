@@ -8,36 +8,8 @@ header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
 header("Pragma: no-cache"); // HTTP 1.0
 header("Expires: 0"); // Proxies
 
-/* <!--script de timer el cual indica que si el cursor del mouse no se muebe durante 2 minutos se cierra la session y regresa al login-->*/
-echo '<script>
-let timer;
 
-// Función para redireccionar a cerrar.php
-function redireccionar() {
-  window.location.href = "/privade/models/salir.php";
-}
-
-// Función para restablecer el temporizador
-function resetTimer() {
-  clearTimeout(timer); // Limpiar el temporizador anterior
-  timer = setTimeout(redireccionar,500000); // 10 segundos en milisegundos
-}
-
-// Función para reiniciar el temporizador al detectar movimiento del mouse
-function reiniciarTimer() {
-  resetTimer();
-  document.removeEventListener("mousemove", reiniciarTimer);
-  document.addEventListener("mousemove", reiniciarTimer);
-}
-
-// Evento para detectar el movimiento del mouse y reiniciar el temporizador
-document.addEventListener("mousemove", reiniciarTimer);
-
-// Iniciar el temporizador al cargar la página
-resetTimer();
-</script>';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

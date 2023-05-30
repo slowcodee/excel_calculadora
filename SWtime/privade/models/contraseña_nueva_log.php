@@ -25,13 +25,13 @@ if ($contraseña1 == $contraseña2) {
     $_SESSION['alert_message'] = 'ACTUALIZACION EXITOSA';
     $_SESSION['alert_type'] = 'success';
     $_SESSION['alert_duration'] = 5;
-    header('Location: /privade/views/session/contraseña_nueva.php');
+    header('Location: /privade/views/session/SHARE/contraseña_nueva.php');
     die;
 } else {
     $_SESSION['alert_message'] = '¡ERROR EN LA CONTRASEÑA!';
     $_SESSION['alert_type'] = 'warning';
     $_SESSION['alert_duration'] = 5;
-    header('Location: /privade/views/session/contraseña_nueva.php');
+    header('Location: /privade/views/session/SHARE/contraseña_nueva.php');
     die;
 }
 

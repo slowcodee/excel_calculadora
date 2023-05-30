@@ -21,7 +21,8 @@ if ($_SESSION['ROL'] == 'admin') {
         </head>
         <body>
             <div class='container'>
-                
+            <h1>ID_ralp.php</h1>    
+
                     <div class="d-flex justify-content-center">
                         <a class="btn btn-danger btn-block btn-lg mb-2" href="/privade/views/session/HomeAD.php" role="button">atras</a>
                     </div> 

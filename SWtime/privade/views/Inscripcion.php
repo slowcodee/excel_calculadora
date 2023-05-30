@@ -1,6 +1,6 @@
 <?php
 
-include "/laragon/www/SWtime/privade/controllers/base.php";
+include "/laragon/www/SWtime/privade/controllers/control_externo.php";
 
 
 $alertMessage = isset($_GET['alert_message']) ? urldecode($_GET['alert_message']) : '';
