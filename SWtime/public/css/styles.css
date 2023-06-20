@@ -1,0 +1,23 @@
+#suggestions-container {
+    position: absolute;
+    width: 200px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-top: none;
+    display: none;
+}
+
+#suggestions-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#suggestions-container ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions-container ul li:hover {
+    background-color: #e5e5e5;
+}

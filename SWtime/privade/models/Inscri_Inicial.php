@@ -9,8 +9,8 @@ $contraseña1 = $_POST['contraseña1'];
 $contraseña2 = $_POST['contraseña2'];
 
 $queries = array(
-    "SELECT * FROM `tb_instructors` WHERE `C.C` = '$cedula'",
-    "SELECT * FROM `tb_admin` WHERE `C.C` = '$cedula'"
+    "SELECT * FROM `tb_instructors` WHERE `ID_CC` = '$cedula'",
+    "SELECT * FROM `tb_admin` WHERE `ID_CC` = '$cedula'"
 );
 
 $data = array();
@@ -26,7 +26,7 @@ foreach ($queries as $query) {
 // Verificar la cédula y el correo ingresados
 $validCredentials = false;
 foreach ($data as $item) {
-    if ($cedula == $item['C.C'] && $correo == $item['CorreoInstitucional']) {
+    if ($cedula == $item['ID_CC'] && $correo == $item['CorreoInstitucional']) {
         $validCredentials = true;
         break;
     }
@@ -38,10 +38,10 @@ if ($validCredentials) {
         $key = "EstaEsMiClaveSecreta1234";
         $ciphertext = encrypt($contraseña, $key);
 
-        $sql_update_instructors = "UPDATE `tb_instructors` SET `CONTRASEÑA` = '$ciphertext' WHERE `C.C` = '$cedula'";
+        $sql_update_instructors = "UPDATE `tb_instructors` SET `CONTRASENA` = '$ciphertext' WHERE `ID_CC` = '$cedula'";
         $result_instructors = mysqli_query($conn, $sql_update_instructors);
 
-        $sql_update_admin = "UPDATE `tb_admin` SET `CONTRASEÑA` = '$ciphertext' WHERE `C.C` = '$cedula'";
+        $sql_update_admin = "UPDATE `tb_admin` SET `CONTRASENA` = '$ciphertext' WHERE `ID_CC` = '$cedula'";
         $result_admin = mysqli_query($conn, $sql_update_admin);
 
         if ($result_instructors && $result_admin) {

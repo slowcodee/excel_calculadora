@@ -46,23 +46,23 @@ echo '<script>
     </head>
     <body>
         <div class='container d-flex justify-content-center align-items-center' style="height: 100vh;">
-            <form action='/privade/models/Inscri_Inicial.php' method='POST'>
-                <h2 class="d-flex justify-content-center m-4">INSCRIPCION</h2>
+            <form action='/privade/models/Inscri_Inicial.php' method='POST' autocomplete="off">
+                <h2 class="d-flex justify-content-center m-4">CAMBIO DE COMTRASEÑA</h2>
                 <div class='form-group'>
                     <label for='username' class="d-flex justify-content-center">CEDULA</label>
-                    <input type='number' class='cedula form-control d-flex justify-content-center' placeholder='NUEMERO DE LA C.C' id='cedula' name='cedula' required>
+                    <input type='TEXT' class='cedula form-control d-flex justify-content-center' placeholder='NUEMERO DE LA `ID_CC`' id='cedula' name='cedula'  required>
                 </div>
                 <div class='form-group'>
                     <label for='username' class="d-flex justify-content-center">EMAIL</label>
-                    <input type='email' class='correo form-control d-flex justify-content-center' placeholder='EMAIL SENA' id='correo' name='correo' required>
+                    <input type='email' class='correo form-control d-flex justify-content-center' placeholder='EMAIL SENA' id='correo' name='correo'  required>
                 </div>
                 <div class='form-group'>
                     <label for='pwd' class="d-flex justify-content-center">CONTRASEÑA</label>
-                    <input type='password' class='CONTRASEÑA1 form-control d-flex justify-content-center' placeholder='CONTRASEÑA' id='contraseña1' name='contraseña1' required>
+                    <input type='password' class='CONTRASEÑA1 form-control d-flex justify-content-center' placeholder='CONTRASENA' id='contraseña1' name='contraseña1'  required>
                 </div>
                 <div class='form-group'>
                     <label for='pwd' class="d-flex justify-content-center">VALIDACION DE LA CONTRASEÑA</label>
-                    <input type='password' class='CONTRASEÑA2 form-control d-flex justify-content-center' placeholder='CONTRASEÑA' id='contraseña2' name='contraseña2' required>
+                    <input type='password' class='CONTRASEÑA2 form-control d-flex justify-content-center' placeholder='CONTRASENA' id='contraseña2' name='contraseña2' required>
                 </div>
                 <div>
                     <a class="d-flex justify-content-center m-3" href="/privade/views/Index.php"> !INGRESA AQUI¡</a>

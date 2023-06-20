@@ -28,21 +28,21 @@ echo '<script>
 </head>
 <body>
     <div class='container d-flex justify-content-center align-items-center' style="height: 100vh;">
-        <form action='/privade/models/login.php' method='POST'>
-            <h2 class="d-flex justify-content-center m-4">Login Form</h2>
+        <form action='/privade/models/login.php' method='POST' autocomplete="off" >
+            <h2 class="d-flex justify-content-center m-4">LOGIN</h2>
             <div class='form-group'>
                 <label for='username' class="d-flex justify-content-center">EMAIL</label>
                 <input type='text' class='EMAIL form-control d-flex justify-content-center' placeholder='EMAIL SENA' id='email' name='email' required>
             </div>
             <div class='form-group'>
                 <label for='pwd' class="d-flex justify-content-center">CONTRASEÑA</label>
-                <input type='password' class='CONTRASEÑA form-control d-flex justify-content-center' placeholder='CONTRASEÑA' id='contraseña' name='contraseña' required>
+                <input type='password' class='CONTRASEÑA form-control d-flex justify-content-center' placeholder='CONTRASENA' id='CONTRASENA' name='CONTRASENA'  required>
             </div>
             <div>
                 <a class="d-flex justify-content-center m-3" href="/privade/views/inscripcion.php">¿Olvidaste tu contraseña?</a>
             </div>
             <div class="d-flex justify-content-center">
-                <button type='submit' class='btn btn-primary'>Login</button>
+                <button type='submit' class='btn btn-primary'>IR</button>
             </div> 
         </form>
     </div>

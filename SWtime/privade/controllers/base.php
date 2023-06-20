@@ -17,6 +17,10 @@ function redireccionar() {
   window.location.href = "/privade/models/salir.php";
 }
 
+function irDetalleFicha(fechaInicial, fechaFinal, id) {
+  window.location.href = `/privade/views/session/SHARE/fichas_log/Fichas.php?PROG_INICIO=${fechaInicial}&PROG_FINAL=${fechaFinal}&id_RAP=${id}`;
+}
+
 // Función para restablecer el temporizador
 function resetTimer() {
   clearTimeout(timer); // Limpiar el temporizador anterior

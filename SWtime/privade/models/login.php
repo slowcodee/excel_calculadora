@@ -5,7 +5,7 @@ include "/laragon/www/SWtime/privade/controllers/base.php";
 #####################################################################################################################################################################################################################################
 //variables del form
 $email = $_POST['email'];
-$contraseña = $_POST['contraseña'];
+$contraseña = $_POST['CONTRASENA'];
 
 #####################################################################################################################################################################################################################################
 // Variables de consulta
@@ -30,7 +30,7 @@ foreach ($data as $item) {
     if (!empty($item)) {
         // El item tiene información
         // Ejemplo de uso
-        $ciphertext = $item['CONTRASEÑA'];
+        $ciphertext = $item['CONTRASENA'];
         $key = "EstaEsMiClaveSecreta1234";
         $plaintext = decrypt($ciphertext, $key);
 
@@ -39,8 +39,8 @@ foreach ($data as $item) {
             session_start();
             $_SESSION['NOMBRE'] = $item['NOMBRE'];
             $NOMBREUSER = $_SESSION['NOMBRE'];
-            $_SESSION['C.C'] = $item['C.C'];
-            $CEDULA = $_SESSION['C.C'];
+            $_SESSION['ID_CC'] = $item['ID_CC'];
+            $CEDULA = $_SESSION['ID_CC'];
             header('Location: /privade/models/home_log.php');
             exit;
         } else {

@@ -5,7 +5,7 @@ include "/laragon/www/SWtime/privade/config_BD/Connection.php";
 $contraseña1 = $_POST['contraseña1'];
 $contraseña2 = $_POST['contraseña2'];
 
-$CEDULA = $_SESSION['C.C'];
+$CEDULA = $_SESSION['ID_CC'];
 
 $tables = array("tb_instructors", "tb_admin");
 
@@ -15,7 +15,7 @@ if ($contraseña1 == $contraseña2) {
     $ciphertext = encrypt($contraseña, $key);
 
     foreach ($tables as $table) {
-        $sql = "UPDATE `$table` SET `CONTRASEÑA` = ? WHERE `C.C` = ?";
+        $sql = "UPDATE `$table` SET `CONTRASENA` = ? WHERE `ID_CC` = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ss", $ciphertext, $CEDULA);
         mysqli_stmt_execute($stmt);
